@@ -714,3 +714,12 @@ Other minor additions
   _≥″?_ : Decidable _≥″_
   _>″?_ : Decidable _>″_
   ```
+
+* Added new types and proofs to `Data.Fin`:
+  ```agda
+  _≥_ : ∀ {n} → Rel (Fin n) ℓ₀
+  _>_ : ∀ {n} → Rel (Fin n) ℓ₀
+
+  _≥?_ : ∀ {n} → Decidable (_≥_ {n})
+  _>?_ : ∀ {n} → Decidable (_>_ {n})
+  ```

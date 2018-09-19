@@ -10,6 +10,7 @@
 
 module Data.Fin where
 
+open import Function using (flip)
 open import Data.Empty using (⊥-elim)
 open import Data.Nat as ℕ
   using (ℕ; zero; suc; z≤n; s≤s)
@@ -218,7 +219,7 @@ suc x ≟ suc y with x ≟ y
 ------------------------------------------------------------------------
 -- Order relations
 
-infix 4 _≤_ _<_
+infix 4 _≤_ _<_ _≥_ _>_
 
 _≤_ : ∀ {n} → Rel (Fin n) ℓ₀
 _≤_ = ℕ._≤_ on toℕ
@@ -226,14 +227,33 @@ _≤_ = ℕ._≤_ on toℕ
 _<_ : ∀ {n} → Rel (Fin n) ℓ₀
 _<_ = ℕ._<_ on toℕ
 
+_≥_ : ∀ {n} → Rel (Fin n) ℓ₀
+_≥_ = ℕ._≥_ on toℕ
+
+_>_ : ∀ {n} → Rel (Fin n) ℓ₀
+_>_ = ℕ._>_ on toℕ
+
+
+infix 4 _≺_
+
 data _≺_ : ℕ → ℕ → Set where
   _≻toℕ_ : ∀ n (i : Fin n) → toℕ i ≺ n
+
+
+infix 4 _≤?_ _<?_ _≥?_ _>?_
 
 _≤?_ : ∀ {n} → Decidable (_≤_ {n})
 a ≤? b = toℕ a ℕ.≤? toℕ b
 
 _<?_ : ∀ {n} → Decidable (_<_ {n})
 m <? n = suc (toℕ m) ℕ.≤? toℕ n
+
+_≥?_ : ∀ {n} → Decidable (_≥_ {n})
+_≥?_ = flip _≤?_
+
+_>?_ : ∀ {n} → Decidable (_>_ {n})
+_>?_ = flip _<?_
+
 
 -- An ordering view.
 
