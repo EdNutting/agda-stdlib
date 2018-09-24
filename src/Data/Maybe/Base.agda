@@ -105,3 +105,16 @@ to-witness (just {x = p} _) = p
 to-witness-T : ∀ {p} {P : Set p} (m : Maybe P) → T (is-just m) → P
 to-witness-T (just p) _  = p
 to-witness-T nothing  ()
+
+Is-just? : ∀ {a} {A : Set a} → (v : Maybe A) → Dec (Is-just v)
+Is-just? nothing = no λ ()
+Is-just? (just v) = yes (just ⊤.tt)
+
+Is-Just-And : {a : Level} {A : Set a} → (P : A → Set a) → Maybe A → Set a
+Is-Just-And P = Any P
+
+Is-Just-And? : {a : Level} {A : Set a} → {P : A → Set a} → (v : Maybe A) → ((a : A) → Dec (P a)) → Dec (Is-Just-And P v)
+Is-Just-And? (just x) d with d x
+Is-Just-And? (just x) d | yes p = yes (just p)
+Is-Just-And? (just x) d | no ¬p = no λ { (just px) → ¬p px }
+Is-Just-And? nothing d = no (λ ())
