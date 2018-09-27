@@ -58,3 +58,6 @@ fromList = S.fromList ∘ List.map (λ k → (k , _))
 
 toList : ⟨Set⟩ → List Key
 toList = List.map proj₁ ∘ S.toList
+
+union : ⟨Set⟩ → ⟨Set⟩ → ⟨Set⟩
+union = S.union
