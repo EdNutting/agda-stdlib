@@ -53,6 +53,10 @@ false xor b = b
 ------------------------------------------------------------------------
 -- Queries
 
+T? : (b : Bool) → Dec (T b)
+T? false = no λ ()
+T? true = yes ⊤.tt
+
 infix 4 _≟_
 
 _≟_ : Decidable {A = Bool} _≡_
