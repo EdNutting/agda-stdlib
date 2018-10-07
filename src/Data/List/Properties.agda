@@ -525,6 +525,17 @@ module _ {a p} {A : Set a} {P : A → Set p} (P? : Decidable P) where
   ... | no ¬px = contradiction eq (<⇒≢ (s≤s (length-filter xs)))
   ... | yes px = P.cong (x ∷_) (filter-complete (suc-injective eq))
 
+  filter-∷ : ∀ {x xs} → filter P? (x ∷ xs) ≡ (filter P? [ x ]) ++ (filter P? xs)
+  filter-∷ {x} with P? x
+  filter-∷ {x} | yes p = refl
+  filter-∷ {x} | no ¬p = refl
+
+  filter-++ : ∀ {xs ys} → filter P? (xs ++ ys) ≡ filter P? xs ++ filter P? ys
+  filter-++ {[]} = refl
+  filter-++ {x ∷ xs} with P? x
+  filter-++ {x ∷ xs} {ys} | yes p = P.cong (_∷_ x) (filter-++ {xs} {ys})
+  filter-++ {x ∷ xs} {ys} | no ¬p = filter-++ {xs} {ys}
+
 ------------------------------------------------------------------------
 -- partition
 
