@@ -257,3 +257,8 @@ init .(ys ∷ʳ y) | (ys , y , refl) = ys
 last : ∀ {a n} {A : Set a} → Vec A (1 + n) → A
 last xs         with initLast xs
 last .(ys ∷ʳ y) | (ys , y , refl) = y
+
+filter : ∀ {a p n} {A : Set a} {P : A → Set p} →
+         (d : Decidable {A = A} P) → (vs : Vec A n) →
+         Vec A (List.length $ List.filter d $ toList vs)
+filter d = fromList ∘ List.filter d ∘ toList
