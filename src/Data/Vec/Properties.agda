@@ -633,6 +633,15 @@ module _ {a} {A : Set a} where
   toList∘fromList List.[]       = refl
   toList∘fromList (x List.∷ xs) = P.cong (x List.∷_) (toList∘fromList xs)
 
+  length∘toList : ∀ {n} → (xs : Vec A n) → List.length (toList xs) ≡ n
+  length∘toList [] = refl
+  length∘toList (x ∷ xs) = P.cong suc (length∘toList xs)
+
+  length∘toList' : ∀ {n} → (xs : Vec A n) → n ≡ List.length (toList xs)
+  length∘toList' [] = refl
+  length∘toList' (x ∷ xs) = P.cong suc (length∘toList' xs)
+
+
 ------------------------------------------------------------------------
 -- DEPRECATED NAMES
 ------------------------------------------------------------------------
