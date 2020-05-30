@@ -437,6 +437,12 @@ lower₁-irrelevant {suc n} zero     _   _ = refl
 lower₁-irrelevant {suc n} (suc i)  _   _ =
   cong suc (lower₁-irrelevant i _ _)
 
+lower₁≡ : ∀ {n} {i j : Fin (suc n)}
+        → i ≡ j
+        → ∀ n≢i n≢j
+        → lower₁ {n} i n≢i ≡ lower₁ {n} j n≢j
+lower₁≡ refl _ _ = lower₁-irrelevant _ _ _
+
 inject₁≡⇒lower₁≡ : ∀ {n} → {i : Fin n} →
                   {j : Fin (ℕ.suc n)} →
                   (≢p : n ≢ (toℕ j)) →
